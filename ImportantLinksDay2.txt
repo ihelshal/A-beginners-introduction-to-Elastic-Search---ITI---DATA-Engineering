@@ -1,0 +1,17 @@
+https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-range-query.html
+
+https://opster.com/guides/elasticsearch/search-apis/elasticsearch-and-and-or-operators/
+
+https://www.elastic.co/guide/en/beats/metricbeat/current/exported-fields-system.html#_process_8
+
+https://www.alibabacloud.com/help/en/es/user-guide/configure-the-yml-file
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html#coordinating-node
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/_max_file_size_check.html
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_linux
+
+

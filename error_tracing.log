@@ -1,0 +1,33 @@
+(base) ihelshal@Ibrahims-MacBook-Pro Ismailia_ELK % docker logs 08ac22c2000b | grep "error"
+ERROR: Elasticsearch did not exit normally - check the logs at /user/share/elasticsearch/logs/docker-cluster.log
+
+ERROR: Elasticsearch exited unexpectedly
+{
+    "@timestamp":"2024-08-03T06:40:25.623Z", 
+    "log.level":"ERROR", 
+    "message":"fatal exception while booting Elasticsearch", 
+    "ecs.version": "1.2.0",
+    "service.name":"ES_ECS",
+    "event.dataset":"elasticsearch.server",
+    "process.thread.name":"main",
+    "log.logger":"org.elasticsearch.bootstrap.Elasticsearch",
+    "elasticsearch.node.name":"es01",
+    "elasticsearch.cluster.name":"docker-cluster",
+    "error.type":"java.lang.IllegalArgumentException",
+    "error.message":"unknown setting [bootstrap.memory.lock] did you mean [bootstrap.memory_lock]?",
+    "error.stack_trace":"java.lang.IllegalArgumentException: unknown setting [bootstrap.memory.lock] did you mean [bootstrap.memory_lock]?\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.common.settings.AbstractScopedSettings.validate(AbstractScopedSettings.java:561)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.common.settings.AbstractScopedSettings.validate(AbstractScopedSettings.java:507)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.common.settings.AbstractScopedSettings.validate(AbstractScopedSettings.java:477)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.common.settings.AbstractScopedSettings.validate(AbstractScopedSettings.java:447)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.common.settings.SettingsModule.<init>(SettingsModule.java:151)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.common.settings.SettingsModule.<init>(SettingsModule.java:56)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.node.Node.<init>(Node.java:472)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.node.Node.<init>(Node.java:322)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.bootstrap.Elasticsearch$2.<init>(Elasticsearch.java:214)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.bootstrap.Elasticsearch.initPhase3(Elasticsearch.java:214)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.bootstrap.Elasticsearch.main(Elasticsearch.java:67)\n"
+}
+
+
+
+ERROR: Elasticsearch did not exit normally - check the logs at /user/share/elasticsearch/logs/docker-cluster.log
+
+ERROR: Elasticsearch exited unexpectedly
+
+    {
+        "@timestamp":"2024-08-03T06:44:25.410Z", "log.level":"ERROR",
+         "message":"fatal exception while booting Elasticsearch", 
+         "ecs.version": "1.2.0","service.name":"ES_ECS","event.dataset":"elasticsearch.server","process.thread.name":"main",
+         "log.logger":"org.elasticsearch.bootstrap.Elasticsearch","elasticsearch.node.name":"es01",
+         "elasticsearch.cluster.name":"docker-cluster","error.type":"java.lang.IllegalStateException",
+         "error.message":"failed to obtain node locks, tried [/user/share/elasticsearch/data]; maybe these locations are not writable or multiple nodes were started on the same data path?","error.stack_trace":"java.lang.IllegalStateException: failed to obtain node locks, tried [/user/share/elasticsearch/data]; maybe these locations are not writable or multiple nodes were started on the same data path?\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.env.NodeEnvironment.<init>(NodeEnvironment.java:285)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.node.Node.<init>(Node.java:478)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.node.Node.<init>(Node.java:322)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.bootstrap.Elasticsearch$2.<init>(Elasticsearch.java:214)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.bootstrap.Elasticsearch.initPhase3(Elasticsearch.java:214)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.bootstrap.Elasticsearch.main(Elasticsearch.java:67)\nCaused by: java.io.IOException: failed to obtain lock on /user/share/elasticsearch/data\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.env.NodeEnvironment$NodeLock.<init>(NodeEnvironment.java:230)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.env.NodeEnvironment$NodeLock.<init>(NodeEnvironment.java:198)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.env.NodeEnvironment.<init>(NodeEnvironment.java:277)\n\t... 5 more\nCaused by: java.nio.file.NoSuchFileException: /user/share/elasticsearch/data/node.lock\n\tat java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)\n\tat java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106)\n\tat java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)\n\tat java.base/sun.nio.fs.UnixPath.toRealPath(UnixPath.java:825)\n\tat org.apache.lucene.core@9.4.2/org.apache.lucene.store.NativeFSLockFactory.obtainFSLock(NativeFSLockFactory.java:94)\n\tat org.apache.lucene.core@9.4.2/org.apache.lucene.store.FSLockFactory.obtainLock(FSLockFactory.java:43)\n\tat org.apache.lucene.core@9.4.2/org.apache.lucene.store.BaseDirectory.obtainLock(BaseDirectory.java:44)\n\tat org.elasticsearch.server@8.6.2/org.elasticsearch.env.NodeEnvironment$NodeLock.<init>(NodeEnvironment.java:223)\n\t... 7 more\n\tSuppressed: java.nio.file.AccessDeniedException: /user/share/elasticsearch/data/node.lock\n\t\tat java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:90)\n\t\tat java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106)\n\t\tat java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)\n\t\tat java.base/sun.nio.fs.UnixFileSystemProvider.newByteChannel(UnixFileSystemProvider.java:218)\n\t\tat java.base/java.nio.file.Files.newByteChannel(Files.java:380)\n\t\tat java.base/java.nio.file.Files.createFile(Files.java:658)\n\t\tat org.apache.lucene.core@9.4.2/org.apache.lucene.store.NativeFSLockFactory.obtainFSLock(NativeFSLockFactory.java:84)\n\t\t... 10 more\n"}

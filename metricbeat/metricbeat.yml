@@ -1,0 +1,15 @@
+metricbeat.modules:
+- module: system
+  metricsets: ["cpu", "memory", "network", "load", "process", "filesystem", "uptime", "core"]
+  period: 5s
+  enabled: True
+  processes: [".*"]
+  process.include_top_n:
+    by_cpu: 5      # include top 5 processes by CPU
+    by_memory: 5   # include top 5 processes by memory
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+system:
+  hostfs: /hostfs

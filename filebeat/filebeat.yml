@@ -1,0 +1,8 @@
+filebeat.inputs:
+- type: log
+  paths:
+    # - /Users/ihelshal/Kaggle/ITI/Ismailia_ELK/filebeat/logs/*.log
+    - /usr/share/filebeat/logs/*.log
+
+output.logstash:
+  hosts: ["logstash:9601"]

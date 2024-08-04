@@ -1,0 +1,293 @@
+// 1) Show All Elasticsearch indices
+curl -X GET "localhost:9200/_cat/indices?v"
+
+// 2) Create data_view API (IF Kibana has installed in your system and wanna migrate to your solution using APIs)
+curl -X POST "localhost:5601/api/data_views/data_view" -H 'Content-Type: application/json' -H 'kbn-xsrf: true' -d '{"data_view":{"Name":"ITI","timeFieldName":"@timestamp"}}'
+
+// 3) Create New Index ITI
+curl -X PUT "localhost:9200/iti" -H 'Content-Type: application/json' -d '{
+    "settings": {"number_of_shards":1, "number_of_replicas":1},
+    "mappings": {
+        "properties":{
+            "name":{"type":"text"},
+            "course":{"type":"keyword"},
+            "joining_date":{"type":"date"},
+            "Grade":{"type":"integer"}
+        }
+    }
+}'
+
+// 4) Increase number of replicas
+curl -X PUT "localhost:9200/iti/_settings" -H 'Content-Type: application/json' -d '{
+    "index":{"number_of_replicas":2}
+}'
+
+
+
+// 5) Change Mappings
+
+curl -X PUT "localhost:9200/employees/_mappings" -H 'Content-Type: application/json' -d '{
+    "mappings": {
+        "properties":{
+            "name":{"type":"text"},
+            "course":{"type":"keyword"},
+            "joining_date":{"type":"date"},
+            "Grade":{"type":"integer"}
+        }
+    }
+}'
+
+
+// 6) Delete Index
+
+curl -X DELETE "localhost:9200/iti/"
+
+// 7) Update Document
+
+curl -X POST "http://localhost:9200/employees/_update/1" -H 'Content-Type: application/json' -d '{
+    "doc" : {
+        "salary" : 500
+    }
+
+}'
+
+// 8) Delete Document
+
+curl -X DELETE "http://localhost:9200/employees/_doc/1"
+
+
+// 9) Retrive Document
+
+curl -X GET "localhost:9200/employees/_doc/1"
+
+// 10) Add New Doc with id 1
+
+curl -X POST "localhost:9200/iti/_doc/1" -H 'Content-Type: application/json' -d '{
+    "name":"Hazam",
+    "course":"ELK Introduction",
+    "joining_date":"2024-08-02",
+    "Grade":"100"
+}'
+
+
+
+// SELECT * FROM employees WHERE country == 'EG'
+curl -X GET "localhost:9200/employees/_search/" -H 'Content-Type: application/json' -d '{
+    "query" : {
+        "match" : {
+            "country" : "EG"
+        }
+    }
+
+}'
+
+// AND
+
+GET /_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "field1": "value1" }},
+        { "match": { "field2": "value2" }}
+      ]
+    }
+  }
+}
+
+
+// SELECT * FROM employees WHERE country == 'EG' OR country == 'US'
+
+curl -X GET "localhost:9200/employees/_search/" -H 'Content-Type: application/json' -d '{
+    "query": {
+        "bool": {
+        "should": [
+            {
+                "term": {
+                    "country": "EG"
+                }
+            },
+            {
+                "term": {
+                    "country": "US"
+                }
+            }
+        ],
+        "minimum_should_match": 1
+        }
+    }
+}'
+
+curl -X GET "localhost:9200/employees/_search/" -H 'Content-Type: application/json' -d '{
+    "query": {
+        "query_string": {
+            "query": "country:US OR country:EG"
+        }
+    }
+}'
+
+curl -X GET "localhost:9200/employees/_search/" -H 'Content-Type: application/json' -d '{
+  "query": {
+    "bool": {
+      "should": [
+        { "match": { "name": "Hazam" }},
+        { "match": { "gender": "male" }}
+      ],
+      "minimum_should_match": 1
+    }
+  }
+}
+
+
+
+curl -X GET "localhost:9200/employees/_search/" -H 'Content-Type: application/json' -d '{
+    "query": {
+        "range":{
+            "dob": {
+                "gte":"1980-01-01",
+                "lte":"1990-01-01"
+            }
+        }
+    }
+}'
+
+
+
+curl -X GET "localhost:9200/employees/_search?pretty"
+
+
+// curl -X GET "localhost:9200/employees/_search/" -H 'Content-Type: application/json' -d '{
+//     "query": {
+//         "filtered":{
+//             "filter": {
+//                 "exists": {
+//                     {"field":"email"}
+//                 }
+//             }
+//         }
+//     }
+// }'
+
+
+
+curl -X GET "localhost:9200/employees/_search?pretty" -H 'Content-Type: application/json' -d'{
+    "query": {
+        "range":{
+            "salary":{
+                "gt": 120
+            }
+        }
+    }
+}'
+
+
+
+curl -X GET "localhost:9200/employees/_search?pretty" -H 'Content-Type: application/json' -d'{
+    "size": 0,
+    "aggs":{
+        "salaries_by_geneder":{
+            "terms":{
+                "field":"gender"
+            },
+            "aggs":{
+                "average_salary":{
+                    "avg":{
+                        "field":"salary"
+                    }
+                }
+            }
+        }
+    }
+}'
+
+
+
+
+
+// 11) Add New Index employees - then pass data through Elasticsearch
+
+curl -X PUT "http://localhost:9200/employees/_doc/6" -H 'Content-Type: application/json' -d'
+{
+  "name": "Hazam",
+  "email": "hazam@iti.com",
+  "dob": "1995-06-20",
+  "country": "EG",
+  "gender": "male",
+  "salary": 10000.0
+}'
+
+
+curl -X PUT "http://localhost:9200/employees/_doc/7" -H 'Content-Type: application/json' -d'
+{
+  "name": "manar",
+  "email": "manar@iti.com",
+  "dob": "1995-06-20",
+  "country": "EG",
+  "gender": "female",
+  "salary": 10000.0
+}'
+
+
+curl -X PUT "http://localhost:9200/employees/_doc/1" -H 'Content-Type: application/json' -d'
+{
+  "name": "Duy Do",
+  "email": "duy.do@sentifi.com",
+  "dob": "1984-06-20",
+  "country": "VN",
+  "gender": "male",
+  "salary": 100.0
+}'
+
+
+curl -X PUT "http://localhost:9200/employees/_doc/2" -H 'Content-Type: application/json' -d'
+{
+  "name": "Ahmed Ali",
+  "email": "ahmed.ali@company.com",
+  "dob": "1990-04-12",
+  "country": "EG",
+  "gender": "male",
+  "salary": 150.0
+}'
+
+
+curl -X PUT "http://localhost:9200/employees/_doc/3" -H 'Content-Type: application/json' -d'
+{
+  "name": "Sara Hassan",
+  "email": "sara.hassan@company.com",
+  "dob": "1987-07-18",
+  "country": "SA",
+  "gender": "female",
+  "salary": 200.0
+}'
+
+curl -X PUT "http://localhost:9200/employees/_doc/4" -H 'Content-Type: application/json' -d'
+{
+  "name": "John Doe",
+  "email": "john.doe@company.com",
+  "dob": "1980-11-05",
+  "country": "US",
+  "gender": "male",
+  "salary": 120.0
+}'
+
+curl -X PUT "http://localhost:9200/employees/_doc/5" -H 'Content-Type: application/json' -d'
+{
+  "name": "Linda Smith",
+  "email": "linda.smith@company.com",
+  "dob": "1995-03-23",
+  "country": "UK",
+  "gender": "female",
+  "salary": 110.0
+}'
+
+
+
+curl -X POST "http://localhost:9200/employees/_doc/" -H 'Content-Type: application/json' -d'
+{
+  "name": "Ibrahim",
+  "email": "ibrahim@iti.com",
+  "dob": "1995-03-23",
+  "country": "UK",
+  "gender": "male",
+  "salary": 110.0
+}'
