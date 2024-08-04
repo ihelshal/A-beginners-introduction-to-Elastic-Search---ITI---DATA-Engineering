@@ -21,6 +21,13 @@ Filebeat is a lightweight log shipper that monitors and forwards log data to Log
 ### **Metricbeat**
 Metricbeat is a lightweight shipper designed to collect and ship system and service metrics. It provides insights into the performance of the system and services, allowing for better monitoring and optimization.
 
+### **Use Cases**
+
+Development & Testing: Quickly spin up an ELK Stack for developing and testing applications.
+Monitoring & Analytics: Use the stack to monitor logs and metrics from various sources, enabling better decision-making based on real-time data.
+Data Exploration: Analyze and visualize large datasets, gaining insights into trends, anomalies, and other critical metrics.
+This setup provides a robust foundation for working with the ELK Stack, making it easier to manage and analyze your data.
+
 ## **Getting Started**
 
 This setup is ready to use with Docker Compose. Simply clone the repository, navigate to the project directory, and run the following command to start all services:
@@ -28,11 +35,5 @@ This setup is ready to use with Docker Compose. Simply clone the repository, nav
 ```bash
 ./system-up
 
-Once the services are up and running, you can access Kibana by navigating to http://localhost:5601 in your web browser. From there, you can start exploring your data, creating visualizations, and monitoring the health of your Elasticsearch cluster.
-
-## **Use Cases** 
-
-Development & Testing: Quickly spin up an ELK Stack for developing and testing applications.
-Monitoring & Analytics: Use the stack to monitor logs and metrics from various sources, enabling better decision-making based on real-time data.
-Data Exploration: Analyze and visualize large datasets, gaining insights into trends, anomalies, and other critical metrics.
-This setup provides a robust foundation for working with the ELK Stack, making it easier to manage and analyze your data.
+Once the services are up and running, you can access Kibana by navigating to http://localhost:5601 in your web browser.
+From there, you can start exploring your data, creating visualizations, and monitoring the health of your Elasticsearch cluster.
